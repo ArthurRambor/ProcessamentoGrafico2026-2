@@ -13,7 +13,7 @@
  * Descrição:
  *   Este código é o "Olá Mundo" da Computação Gráfica, utilizando OpenGL Moderna.
  *   No pipeline programável, o desenvolvedor pode implementar as etapas de
- *   Processamento de Geometria e Processamento de Pixel utilizando shaders.
+ *   Process.amento de Geometria e Processamento de Pixel utilizando shaders.
  *   Um programa de shader precisa ter, obrigatoriamente, um Vertex Shader e um Fragment Shader,
  *   enquanto outros shaders, como o de geometria, são opcionais.
  *
