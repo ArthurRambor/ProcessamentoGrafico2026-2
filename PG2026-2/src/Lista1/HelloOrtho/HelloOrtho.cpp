@@ -35,6 +35,13 @@ using namespace std;
 // GLFW
 #include <GLFW/glfw3.h>
 
+// GLM 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+using namespace glm;
+
 // Protótipo da função de callback de teclado
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
@@ -74,7 +81,7 @@ int main()
 
 	// Muita atenção aqui: alguns ambientes não aceitam essas configurações
 	// Você deve adaptar para a versão do OpenGL suportada por sua placa
-	// Sugestão: comente essas linhas de código para descobrir a versão e
+	// Sugestão: comente essas linhas de código para desobrir a versão e
 	// depois atualize (por exemplo: 4.5 com 4 e 5)
 	// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -90,7 +97,7 @@ int main()
 	// #endif
 
 	// Criação da janela GLFW
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Ola pentágono ! -- Arthur", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Ola Triangulo! -- Rossana", nullptr, nullptr);
 	if (!window)
 	{
 		std::cerr << "Falha ao criar a janela GLFW" << std::endl;
@@ -136,6 +143,9 @@ int main()
 	double prev_s = glfwGetTime();	// Define o "tempo anterior" inicial.
 	double title_countdown_s = 0.1; // Intervalo para atualizar o título da janela com o FPS.
 
+	// Criação da matriz de projeção
+	mat4 projection;
+
 	// Loop da aplicação - "game loop"
 	while (!glfwWindowShouldClose(window))
 	{
@@ -153,7 +163,7 @@ int main()
 
 				// Cria uma string e define o FPS como título da janela.
 				char tmp[256];
-				sprintf(tmp, "Ola pentágono! -- Arthur\tFPS %.2lf", fps);
+				sprintf(tmp, "Ola Triangulo! -- Rossana\tFPS %.2lf", fps);
 				glfwSetWindowTitle(window, tmp);
 
 				title_countdown_s = 0.1; // Reinicia o temporizador para atualizar o título periodicamente.
@@ -172,10 +182,11 @@ int main()
 
 		glBindVertexArray(VAO); // Conectando ao buffer de geometria
 
-        glUniform4f(colorLoc, 0.0f, 1.0f, 0.0f, 1.0f); // enviando cor para variável uniform inputColor
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 5); // cria o polígono
+		glUniform4f(colorLoc, 0.0f, 0.0f, 1.0f, 1.0f); // enviando cor para variável uniform inputColor
+
 		// Chamada de desenho - drawcall
 		// Poligono Preenchido - GL_TRIANGLES
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		// glBindVertexArray(0); // Desnecessário aqui, pois não há múltiplos VAOs
 
@@ -263,12 +274,11 @@ int setupGeometry()
 	// Pode ser arazenado em um VBO único ou em VBOs separados
 	GLfloat vertices[] = {
 		// x   y     z
-        0.0,  0.75, 0.0, // v0 - topo (pivô do fan)
-        -0.5,  0.25, 0.0, // v1 - superior-esquerdo
-        -0.5, -0.10, 0.0, // v2 - inferior-esquerdo
-        0.5, -0.10, 0.0, // v3 - inferior-direito
-        0.5,  0.25, 0.0, // v4 - superior-direito
-			 
+		// T0
+		-0.5, -0.5, 0.0,     // v0
+		 0.5, -0.5, 0.0,	 // v1
+		 0.0,  0.5, 0.0,	 // v2
+		// T1
 
 	};
 
